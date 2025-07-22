@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gunshot Detection</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://images.unsplash.com/photo-1614200991676-910c80a78ed4?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        background-size: cover;
+      }
+      
+      .top-text {
+        text-align: center;
+        color: #fff;
+        padding: 20px;
+        max-width: 600px; /* Limit the width of the paragraph */
+        margin: 0 auto; /* Center the paragraph */
+      }
+  
+      .container {
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.8); /* White background color with opacity */
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+  
+      input[type="file"] {
+        margin-top: 20px; /* Add margin to the top of the file input */
+        padding: 10px;
+        border: 2px solid #007bff; /* Blue border around the input */
+        border-radius: 4px;
+        width: 200px; /* Adjust the width of the file input */
+        box-sizing: border-box;
+      }
+      
+      input[type="file"] + button {
+        margin-left: 10px; /* Add margin between file input and button */
+      }
+  
+      button {
+        margin-top: 10px; /* Add margin to the top of the button */
+        padding: 10px 20px;
+        background-color: #007bff; /* Blue button color */
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+  
+      button:hover {
+        background-color: #0056b3; /* Darker blue color on hover */
+      }
+  
+      #result {
+        margin-top: 20px;
+        color: #333; /* Dark gray text color */
+        text-align: left; /* Align result text to the left */
+      }
+  
+      h1 {
+        text-align: left; /* Align header text to the left */
+        margin-left: 20px; /* Add margin to the left of the header */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-text">
+      <p>The hunting of animals in forest areas poses significant dangers to ecosystems and biodiversity. It disrupts food chains, leads to population declines, and can cause extinction of species. Additionally, it alters habitat dynamics, destabilizes ecosystems, and can result in cascading ecological effects, threatening overall forest health.</p>
+    </div>
+    
+    <div class="container">
+      <h1>Gunshot Detection</h1>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".wav" required>
+        <button type="submit">Upload</button>
+      </form>
+      <div id="result"></div>
+    </div>
+
+  <script>
+    document.getElementById("uploadForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      var fileInput = document.getElementById("fileInput");
+      var file = fileInput.files[0];
+      var formData = new FormData();
+      formData.append("file", file);
+
+      fetch("/predict/", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        var resultDiv = document.getElementById("result");
+        if (data.prediction === "Gunshot") {
+          resultDiv.textContent = "Prediction: Gunshot";
+          resultDiv.style.color = "red";
+          window.location.href = "/gunshot_detected"; // Redirect to gunshot_detected.html
+        } else {
+          resultDiv.textContent = "Prediction: Non-Gunshot";
+          resultDiv.style.color = "green";
+        }
+      })
+      .catch(error => {
+        console.error("Error making prediction:", error);
+        document.getElementById("result").textContent = "Error making prediction.";
+      });
+    });
+  </script>
+</body>
+</html>
