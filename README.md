@@ -6,7 +6,7 @@ The system uses **Mel Spectrograms** for feature extraction, a custom-trained ne
 
 ---
 
-## 📜 Table of Contents
+## Table of Contents
 - [Overview](#-overview)
 - [Features](#-features)
 - [Dataset](#-dataset)
@@ -19,7 +19,7 @@ The system uses **Mel Spectrograms** for feature extraction, a custom-trained ne
 
 ---
 
-## 📌 Overview
+## Overview
 This system was designed to:
 - **Identify gunshot sounds** from audio clips.
 - Differentiate them from **other urban background noises**.
@@ -40,14 +40,14 @@ The model was **trained from scratch** (no pre-trained models used) on a dataset
 
 ---
 
-## 🎯 Dataset
+## Dataset
 1. **UrbanSound8K Dataset** – Provided various urban environment sounds for non-gunshot examples.
 2. **YouTube GoPro Gunshot Compilation** – Provided real-world gunshot examples.
 3. Audio clips were cleaned, normalized, and converted to spectrograms for model input.
 
 ---
 
-## 🧠 Model Training
+## Model Training
 - Implemented in `crime_detector.ipynb`
 - Steps:
   1. Preprocess audio → Generate Mel Spectrograms.
