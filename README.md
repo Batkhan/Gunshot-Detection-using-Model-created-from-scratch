@@ -59,7 +59,7 @@ The model was **trained from scratch** (no pre-trained models used) on a dataset
 
 ---
 
-## 📂 Directory Structure
+## 📂 Directory Structure (Open the readme file to see the structure)
 Gunshot-Detection/
 │
 ├── user interface/
